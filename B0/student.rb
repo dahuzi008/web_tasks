@@ -41,10 +41,19 @@ class Student
 		stu_file.close
 	end
 
+	i = 0
 	if File::exists?("student.yml")
+		#变量 arr 是一个数组。文件 input.txt 的每一行将是数组 arr 中的一个元素。因此，arr[0] 将包含第一行
+		arr = IO.readlines("student.yml")
+		students = Array.new
+		while i < arr.length
+			str = arr[i].split
+	    students[i] = Student.new(str[0].to_i, str[1], str[2].to_i, str[3].to_i)#to_i 转化成数字
+	    i += 1
+	  end
+
 	else
 		students = Array.new(100){Student.new(nil,nil,nil,nil)}
-		i = 0
 		while i< 100
 			students[i].id = i+1
 			students[i].name = students[i].random_str
