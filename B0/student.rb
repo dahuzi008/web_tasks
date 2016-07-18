@@ -11,6 +11,8 @@ class Student
 	attr_accessor :gender
 	attr_accessor :age
 
+	@@max_id = 0
+
 	def initialize(id,name,gender,age)
 		@id = id
 		@name = name
@@ -82,10 +84,15 @@ class Student
 
 
 	#将students数据存到文件中
-	def self.store_stu(students,fileName)
-		stu_file = File.new(fileName,"w+")
+	def self.store_stu(students)
+		if File::exists?("student.yml")
+			stu_file = File.new("student.yml","w+")
+		else
+			stu_file = File.open("student.yml","w+")
+		end
+
 		j = 0
-		while j< students.length
+		while j< @@max_id
 			stu_file.syswrite(students[j].info)
 			stu_file.syswrite("\n")
 			j += 1
@@ -103,9 +110,10 @@ class Student
 	    students[i] = Student.new(str[0].to_i, str[1], str[2].to_i, str[3].to_i)#to_i 转化成数字
 	    i += 1
 	  end
-
+		@@max_id = arr.length
 	else
 		students = Array.new(100){Student.new(nil,nil,nil,nil)}
+		#随机生成100个学生
 		while i< 100
 			students[i].id = i+1
 			students[i].name = students[i].random_str
@@ -114,32 +122,76 @@ class Student
 
 			i += 1
 		end
-		store_stu(students,"student.yml")
+		@@max_id = 100
+		store_stu(students)
 	end
 
 	#测试排序
+	#order_id(students)
 	# order_name(students)
 	# order_age(students)
 
 	#增删改查
-	def add_stu(students)
+	def self.add_stu(students)
+		puts "请输入学生的name,gender('0'->male;'1'->fomale),age:(用空格隔开)"
+		msg = gets
+		str = msg.split
+		students[@@max_id] = Student.new(@@max_id+1, str[0], str[1].to_i, str[2].to_i)#to_i 转化成数字
+
+		aFile = File.open("student.yml", "a")
+		j = @@max_id
+		aFile.syswrite(students[j].info)
+		aFile.syswrite("\n")
+		aFile.close
+
+		#puts @@max_id
+		@@max_id += 1
 	end
 
-	def delete_stu(students)
+	def self.delete_stu(students)
+		puts "请输入要删除的学生id："
+		msg = gets
+		delete_id = msg.to_i
+		students[delete_id-1] = Student.new(delete_id,nil,nil,nil)
+		puts @@max_id
+
+		store_stu(students)
+
 	end
 
-	def edit_stu(students)
+	def self.edit_stu(students)
+		puts "请输入要编辑的学生id："
+		msg = gets
+		edit_id = msg.to_i
+		puts "请输入学生修改后的name,gender('0'->male;'1'->fomale),age:(用空格隔开)"
+		val = gets
+		str = val.split
+		students[edit_id-1] = Student.new(edit_id,str[0], str[1].to_i, str[2].to_i)
+
+		store_stu(students)
+
 	end
 
-	def inqury_stu(students)
+	def self.inqury_stu(students)
+		# i = 0;
+		# while i < students.length
+		# 	puts students[i].id
+		#
+		# end
+		p students
 	end
 
+	#测试增删改查
+	#add_stu(students)
+	#delete_stu(students)
+	#edit_stu(students)
+	#inqury_stu(students)
 
 end
 
 #test
-stu1 = Student.new(1,"John","male",66)
-puts "Hello World!"
-stu1.info()
-puts stu1.random_str()
-puts stu1.newpass(3)
+# stu1 = Student.new(1,"John","male",66)
+# puts "Hello World!"
+# stu1.info()
+# puts stu1.random_str()
+# puts stu1.newpass(3)
