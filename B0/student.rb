@@ -1,4 +1,10 @@
 #!/usr/bin/ruby
+class Array
+	def sort_by(sysm)
+		self.sort{|x,y| x.send(sysm) <=> y.send(sysm)}
+	end
+end
+
 class Student
 	attr_accessor :id
 	attr_accessor :name
@@ -11,6 +17,11 @@ class Student
 		@gender = gender
 		@age = age
 	end
+
+	#通过p 数组名 来获得[value1 value2]
+	def inspect
+    "#@id #@name #@gender #@age"
+  end
 
 	def info
 		return "#{@id} #{@name} #{@gender} #{@age}"
@@ -29,9 +40,50 @@ class Student
   	return newpass
 	end
 
+	#排序输出功能，按照id和age以及name首字母排序
+	def self.order_id(students)
+		students = students.sort_by(:id)
+
+		aFile = File.open("student.yml", "w+")
+			j = 0
+			while j< students.length
+				aFile.syswrite(students[j].info)
+				aFile.syswrite("\n")
+				j += 1
+			end
+			aFile.close
+	end
+
+	def self.order_age(students)
+		students = students.sort_by(:age)
+
+		aFile = File.open("student.yml", "w+")
+			j = 0
+			while j< students.length
+				aFile.syswrite(students[j].info)
+				aFile.syswrite("\n")
+				j += 1
+			end
+			aFile.close
+	end
+
+	def self.order_name(students)
+		students = students.sort_by(:name)
+
+		aFile = File.open("student.yml", "w+")
+			j = 0
+			while j< students.length
+				aFile.syswrite(students[j].info)
+				aFile.syswrite("\n")
+				j += 1
+			end
+			aFile.close
+	end
+
+
 	#将students数据存到文件中
-	def self.store_stu(students)
-		stu_file = File.new("student.yml","w+")
+	def self.store_stu(students,fileName)
+		stu_file = File.new(fileName,"w+")
 		j = 0
 		while j< students.length
 			stu_file.syswrite(students[j].info)
@@ -62,8 +114,26 @@ class Student
 
 			i += 1
 		end
-		store_stu(students)
+		store_stu(students,"student.yml")
 	end
+
+	#测试排序
+	# order_name(students)
+	# order_age(students)
+
+	#增删改查
+	def add_stu(students)
+	end
+
+	def delete_stu(students)
+	end
+
+	def edit_stu(students)
+	end
+
+	def inqury_stu(students)
+	end
+
 
 end
 
