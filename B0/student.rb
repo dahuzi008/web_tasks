@@ -12,25 +12,48 @@ class Student
 		@age = age
 	end
 
-	def info()
-		puts "#{@id} #{@name} #{@gender} #{@age}"
+	def info
+		return "#{@id} #{@name} #{@gender} #{@age}"
 	end
 
 	#生成随机字串
-	def random_str()
+	def random_str
 		#rand(36 ** rand(3..5)).to_s(36)
 		[*('a'..'z'),*('A'..'Z'),*(0..9)].shuffle[3..6].join
 	end
 
-	#循环生成器100个学生
-	def add_stu()
-		stus = Array.new(100){|i|}
-	end
-
+	#生成随机数字串
 	def newpass(len)
   	newpass = ""
   	1.upto(len){ |i| newpass << rand(10).to_s}
   	return newpass
+	end
+
+	#将students数据存到文件中
+	def self.store_stu(students)
+		stu_file = File.new("student.yml","w+")
+		j = 0
+		while j< students.length
+			stu_file.syswrite(students[j].info)
+			stu_file.syswrite("\n")
+			j += 1
+		end
+		stu_file.close
+	end
+
+	if File::exists?("student.yml")
+	else
+		students = Array.new(100){Student.new(nil,nil,nil,nil)}
+		i = 0
+		while i< 100
+			students[i].id = i+1
+			students[i].name = students[i].random_str
+			students[i].age = rand(15..20)
+			students[i].gender = rand(2)
+
+			i += 1
+		end
+		store_stu(students)
 	end
 
 end
