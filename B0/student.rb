@@ -1,7 +1,7 @@
 #!/usr/bin/ruby
 class Array
 	def sort_by(sysm)
-		self.sort{|x,y| x.send(sysm) <=> y.send(sysm)}
+	  self.sort{|x,y| x.send(sysm) <=> y.send(sysm)}
 	end
 end
 
@@ -22,8 +22,8 @@ class Student
 
 	#通过p 数组名 来获得[value1 value2]
 	def inspect
-    "#@id #@name #@gender #@age"
-  end
+		"#@id #@name #@gender #@age"
+	end
 
 	def info
 		return "#{@id} #{@name} #{@gender} #{@age}"
@@ -37,51 +37,10 @@ class Student
 
 	#生成随机数字串
 	def newpass(len)
-  	newpass = ""
-  	1.upto(len){ |i| newpass << rand(10).to_s}
-  	return newpass
+		newpass = ""
+		1.upto(len){ |i| newpass << rand(10).to_s}
+		return newpass
 	end
-
-	#排序输出功能，按照id和age以及name首字母排序
-	def self.order_id(students)
-		students = students.sort_by(:id)
-
-		aFile = File.open("student.yml", "w+")
-			j = 0
-			while j< students.length
-				aFile.syswrite(students[j].info)
-				aFile.syswrite("\n")
-				j += 1
-			end
-			aFile.close
-	end
-
-	def self.order_age(students)
-		students = students.sort_by(:age)
-
-		aFile = File.open("student.yml", "w+")
-			j = 0
-			while j< students.length
-				aFile.syswrite(students[j].info)
-				aFile.syswrite("\n")
-				j += 1
-			end
-			aFile.close
-	end
-
-	def self.order_name(students)
-		students = students.sort_by(:name)
-
-		aFile = File.open("student.yml", "w+")
-			j = 0
-			while j< students.length
-				aFile.syswrite(students[j].info)
-				aFile.syswrite("\n")
-				j += 1
-			end
-			aFile.close
-	end
-
 
 	#将students数据存到文件中
 	def self.store_stu(students)
@@ -102,14 +61,14 @@ class Student
 
 	i = 0
 	if File::exists?("student.yml")
-		#变量 arr 是一个数组。文件 input.txt 的每一行将是数组 arr 中的一个元素。因此，arr[0] 将包含第一行
-		arr = IO.readlines("student.yml")
+		#如果文件存在，就直接读入
+		arr = IO.readlines("student.yml")#变量 arr 是一个数组。文件 input.txt 的每一行将是数组 arr 中的一个元素。因此，arr[0] 将包含第一行
 		students = Array.new
 		while i < arr.length
 			str = arr[i].split
-	    students[i] = Student.new(str[0].to_i, str[1], str[2].to_i, str[3].to_i)#to_i 转化成数字
-	    i += 1
-	  end
+		    students[i] = Student.new(str[0].to_i, str[1], str[2].to_i, str[3].to_i)#to_i 转化成数字
+		    i += 1
+		end
 		@@max_id = arr.length
 	else
 		students = Array.new(100){Student.new(nil,nil,nil,nil)}
@@ -119,13 +78,35 @@ class Student
 			students[i].name = students[i].random_str
 			students[i].age = rand(15..20)
 			students[i].gender = rand(2)
-
 			i += 1
 		end
 		@@max_id = 100
 		store_stu(students)
 	end
 
+	#排序输出功能，按照id和age以及name首字母排序
+	def self.order_id(students)
+		students = students.sort_by(:id)
+		# aFile = File.open("student.yml", "w+")
+		# j = 0
+		# while j< students.length
+		# 	aFile.syswrite(students[j].info)
+		# 	aFile.syswrite("\n")
+		# 	j += 1
+		# end
+		# aFile.close
+		store_stu(students)
+	end
+
+	def self.order_age(students)
+		students = students.sort_by(:age)
+		store_stu(students)
+	end
+
+	def self.order_name(students)
+		students = students.sort_by(:name)
+		store_stu(students)
+	end
 	#测试排序
 	#order_id(students)
 	# order_name(students)
@@ -138,12 +119,12 @@ class Student
 		str = msg.split
 		students[@@max_id] = Student.new(@@max_id+1, str[0], str[1].to_i, str[2].to_i)#to_i 转化成数字
 
+		#增加就在末尾添加就行
 		aFile = File.open("student.yml", "a")
 		j = @@max_id
 		aFile.syswrite(students[j].info)
 		aFile.syswrite("\n")
 		aFile.close
-
 		#puts @@max_id
 		@@max_id += 1
 	end
@@ -154,9 +135,7 @@ class Student
 		delete_id = msg.to_i
 		students[delete_id-1] = Student.new(delete_id,nil,nil,nil)
 		puts @@max_id
-
 		store_stu(students)
-
 	end
 
 	def self.edit_stu(students)
@@ -167,20 +146,12 @@ class Student
 		val = gets
 		str = val.split
 		students[edit_id-1] = Student.new(edit_id,str[0], str[1].to_i, str[2].to_i)
-
 		store_stu(students)
-
 	end
 
 	def self.inqury_stu(students)
-		# i = 0;
-		# while i < students.length
-		# 	puts students[i].id
-		#
-		# end
 		p students
 	end
-
 	#测试增删改查
 	#add_stu(students)
 	#delete_stu(students)
