@@ -14,7 +14,6 @@ end
 
 class Student
   attr_accessor :id, :name, :gender, :age
-  @@max_id = 0
 
   def initialize(id,name,gender,age)
     @id = id
@@ -56,7 +55,7 @@ end
     end
 
     j = 0
-    while j< @@max_id
+    while j< students.length
       stu_file.syswrite(students[j].info)
       stu_file.syswrite("\n")
       j += 1
@@ -77,7 +76,7 @@ end
       students[i] = Student.new(str[0].to_i, str[1], str[2].to_i, str[3].to_i)#to_i 转化成数字
       i += 1
     end
-    @@max_id = arr.length
+    #@@max_id = arr.length
   else
     students = Array.new(100){Student.new(nil,nil,nil,nil)}
 	#随机生成100个学生
@@ -92,7 +91,7 @@ end
       students[i].age = rand(15..20)
       students[i].gender = rand(2)
     end
-    @@max_id = 100
+    #@@max_id = 100
     store_stu(students)
   end
 
@@ -121,16 +120,16 @@ end
     puts "请输入学生的name,gender('0'->男;'1'->女),age:(用空格隔开)"
     msg = gets
     str = msg.split
-    students[@@max_id] = Student.new(@@max_id+1, str[0], str[1].to_i, str[2].to_i)#to_i 转化成数字
+    max_id = students.length
+    puts max_id
+    students[max_id] = Student.new(max_id+1, str[0], str[1].to_i, str[2].to_i)#to_i 转化成数字
 
     #增加就在末尾添加就行
     aFile = File.open("student.yml", "a")
-    j = @@max_id
+    j = max_id
     aFile.syswrite(students[j].info)
     aFile.syswrite("\n")
     aFile.close
-    #puts @@max_id
-    @@max_id += 1
   end
 
   def delete_stu(students)
