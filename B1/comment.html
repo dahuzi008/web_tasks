@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>留言板</title>
+  </head>
+  <body>
+
+    <h2 class="comments-header">留言（105条）</h2>
+
+<div id="comments-content" class="comments-content" style="clear: left;">
+    <div id="comment-360813" class="comment">
+        <div id="comment-last" class="inner">
+            <div class="comment-header">
+                <div class="asset-meta">
+    <p>
+                    <span class="byline">
+
+
+                        <span class="vcard author"><a title="http://xiunian.wang" href="http://xiunian.wang" target="_blank" rel="nofollow">阿修</a></span>
+
+     说：
+                    </span>
+    </p>
+                </div>
+            </div>
+            <div class="comment-content" id="comment-quote-360813">
+                <p>@tonghu：</p>
+
+    <p>RESTful 推荐的是无状态的，也就是说，按照RESTful 风格，本不应该存在登录一说。因为涉及session就是有状态了，</p>
+
+    <p>http 协议中 请求报头 中应该添加Authorization 字段，用于证明客户端有权查看某个资源。当浏览器访问一个页面时，如果收到服务器的响应代码为401（未授权），可以发送一个包含Authorization请求报头域的请求，要求服务器对其进行验证。这里就应该携带帐号密码（采用ssh）去获取资源。</p>
+            </div>
+    <div class="comment-footer">
+    <div class="comment-footer-inner">
+    <p>
+                       <abbr class="published" title="July 18, 2016 12:08 AM">2016年7月18日 00:08</abbr>
+     | <a href="http://www.ruanyifeng.com/blog/2011/09/restful.html#comment-360813">#</a>
+     | <a href="#comment-text" title="引用阿修的这条留言" onclick="return CommentQuote('comment-quote-360813','阿修');">引用</a>
+    </p>
+    </div>
+    </div>
+        </div>
+    </div>
+
+        </div>
+
+
+
+    <div class="comments-open" id="comments-open">
+        <h2 class="comments-open-header">我要发表看法</h2>
+        <div class="comments-open-content">
+
+
+            <div id="comment-greeting"></div>
+
+            <form method="post" action="http://www.ruanyifeng.com/cgi-bin/mtos/mt-comments.cgi" name="comments_form" id="comments-form" onsubmit="return pleaseWait();">
+                <input type="hidden" name="static" value="1" />
+                <input type="hidden" name="entry_id" value="1675" />
+                <input type="hidden" name="__lang" value="en" />
+                <input type="hidden" name="parent_id" value="" id="comment-parent-id" />
+                <input type="hidden" name="armor" value="1" />
+                <input type="hidden" name="preview" value="" />
+                <input type="hidden" name="sid" value="" />
+                <div id="comments-open-data">
+            <div id="comments-open-text">
+                    <p><label for="comment-text">您的留言
+                    （HTML标签部分可用）</label></p>
+                    <p><textarea id="comment-text" name="text" rows="10" cols="50"></textarea></p>
+                </div>
+                    <div id="comment-form-name">
+                        <p><label for="comment-author">您的大名：</label></p>
+                        <p><input id="comment-author" name="author" size="30" value="" />  <span class="hint"> &laquo;-必填</span></p>
+                    </div>
+                    <div id="comment-form-email">
+                        <p><label for="comment-email">电子邮件：</label></p>
+                        <p><input id="comment-email" name="email" size="30" value="" />  <span class="hint"> &laquo;-必填，不公开</span></p>
+                    </div>
+                    <div id="comment-form-url">
+                        <p><label for="comment-url">个人网址：</label></p>
+                        <p><input id="comment-url" name="url" size="30" value="" />  <span class="hint"> &laquo;-我信任你，不会填写广告链接</span></p>
+                    </div>
+                    <div id="comment-form-remember-me">
+                        <p>
+                        <label for="comment-bake-cookie">记住个人信息？</label><input type="checkbox" id="comment-bake-cookie" name="bakecookie" onclick="!this.checked?forgetMe(document.comments_form):rememberMe(document.comments_form)" value="1" accesskey="r" /></p>
+                    </div>
+                </div>
+                    <div id="comment-form-reply" style="display:none">
+                    <input type="checkbox" id="comment-reply" name="comment_reply" value="" onclick="mtSetCommentParentID()" />
+                    <label for="comment-reply" id="comment-reply-label"></label>
+                </div>
+                <div id="comments-open-captcha"></div>
+                <div id="comments-open-footer">
+<div id="wait" style="display:none;">
+<p><strong>正在发表您的评论，请稍候</strong></p>
+<p>
+<input type="text" name="percent" size="3" style="font-family:Arial; color:black;text-align:center; border-width:medium; border-style:none;">
+<input type="text" name="chart" size="46" style="font-family:Arial;font-weight:bolder; color:black; padding:0px; border-style:none;">
+</p>
+</div>
+
+                    <p><input type="submit" accesskey="s" name="post" id="comment-submit" value="发表" />  <span class="hint"> &laquo;- 点击按钮</span></p>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+  </body>
+</html>
