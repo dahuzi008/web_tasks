@@ -1,11 +1,5 @@
 #!/usr/bin/ruby
 require 'yaml'
-#monkey patch
-# class BuffArray < Array
-# 	def sort_by(sysm)
-#       self.sort{|x,y| x.send(sysm) <=> y.send(sysm)}
-#     end
-# end
 class Array
   def sort_by(sysm)
     self.sort{|x,y| x.send(sysm) <=> y.send(sysm)}
@@ -30,7 +24,6 @@ class Student
   def info
     "#{@id} #{@name} #{@gender} #{@age}"
   end
-
 end
 #生成随机字串
   # def random_str
@@ -68,7 +61,6 @@ end
 	#arr = YAML::load(File.open('student.yml'))
 	#变量 arr 是一个数组。文件 input.txt 的每一行将是数组 arr 中的一个元素。因此，arr[0] 将包含第一行
     arr = IO.readlines("student.yml")
-	#p arr.length
     students = Array.new
     i = 0
     while i < arr.length
@@ -76,14 +68,9 @@ end
       students[i] = Student.new(str[0].to_i, str[1], str[2].to_i, str[3].to_i)#to_i 转化成数字
       i += 1
     end
-    #@@max_id = arr.length
   else
     students = Array.new(100){Student.new(nil,nil,nil,nil)}
-	#随机生成100个学生
-	# while i< 100
-	#  code
-	# 	i += 1
-	# end
+	  #随机生成100个学生
     100.times do |i|
 	# 这里的i是从0开始到99的
       students[i].id = i+1
@@ -91,7 +78,6 @@ end
       students[i].age = rand(15..20)
       students[i].gender = rand(2)
     end
-    #@@max_id = 100
     store_stu(students)
   end
 
@@ -110,10 +96,6 @@ end
     students = students.sort_by(:name)
     store_stu(students)
   end
-#测试排序
-#order_id(students)
-#order_name(students)
-# order_age(students)
 
 #增删改查
   def add_stu(students)
@@ -154,11 +136,6 @@ end
   def inqury_stu(students)
     p students
   end
-#测试增删改查
-#add_stu(students)
-#delete_stu(students)
-#edit_stu(students)
-#inqury_stu(students)
 
 #整合一下
   def manage_stu(students)
@@ -198,10 +175,6 @@ end
       end
     end
   end
+
 #test
-# stu1 = Student.new(1,"John","male",66)
-# puts "Hello World!"
-# stu1.info()
-# puts stu1.random_str()
-# puts stu1.newpass(3)
 manage_stu(students)
